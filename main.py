@@ -7,6 +7,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle('Customer Experience')
+        self.setGeometry(300, 300, 400, 500)
         
         label = QLabel('Welcome!')
         label.setAlignment(Qt.AlignCenter)
