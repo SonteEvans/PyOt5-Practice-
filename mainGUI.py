@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QToolBar, QStatusBar, QLabel, QComboBox, QPushButton, QVBoxLayout, QWidget)
+from PyQt5.QtWidgets import (QApplication, QMainWindow, QToolBar, QStatusBar, QLabel, QComboBox, QPushButton, QVBoxLayout, QWidget, QMessageBox)
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 import directoryCheck
@@ -31,8 +31,15 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(container)
     
     def onButtonClick(self):
-        result = directoryCheck.check_and_create_directory()
-        print(result)
+        reply = QMessageBox.question(self, 'Create Directory', 
+                                     "Do you want to create the 'Shotgun' directory?", 
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        
+        if reply == QMessageBox.Yes:
+            result = directoryCheck.check_and_create_directory()
+            QMessageBox.information(self, 'Result', result)
+        else:
+            QMessageBox.information(self, 'Result', "Directory creation canceled.")
 
 app = QApplication(sys.argv)
 window = MainWindow()
