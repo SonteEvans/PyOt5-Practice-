@@ -3,7 +3,8 @@ from PyQt5.QtWidgets import (QApplication, QMainWindow, QToolBar, QStatusBar, QL
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
 import directoryCheck
-
+import friends
+import addfriends
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -20,12 +21,19 @@ class MainWindow(QMainWindow):
         # Create a button and connect it to the directory check function
         button = QPushButton('Check Directory')
         button.clicked.connect(self.onButtonClick)
-        
+
+        viewlist = QPushButton('Friends List')
+        viewlist.clicked.connect(self.onFriendsListButtonClick)
+        addfriend = QPushButton('Add Friends')
+        addfriend.clicked.connect(self.onAddFriendButtonClick)
+
         # Set up the layout
         layout = QVBoxLayout()
         layout.addWidget(label)
+        layout.addWidget(viewlist)
         layout.addWidget(button)
-        
+        layout.addWidget(addfriend)
+
         container = QWidget()
         container.setLayout(layout)
         self.setCentralWidget(container)
@@ -40,7 +48,10 @@ class MainWindow(QMainWindow):
             QMessageBox.information(self, 'Result', result)
         else:
             QMessageBox.information(self, 'Result', "Directory creation canceled.")
-
+    def onFriendsListButtonClick(self):
+        friends.read_file()
+    def onAddFriendButtonClick(self):
+        addfriends.write_file()
 app = QApplication(sys.argv)
 window = MainWindow()
 window.show()
